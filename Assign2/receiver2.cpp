@@ -13,7 +13,10 @@ int main(int argc, const char* argv[]) {
 	cout << "qid: " << qid << endl;
 	msgbuf1.mtype = 257;
 	int size = sizeof(msgbuf1)-sizeof(long);
+	int times = 0;
+	while(times < 21) {
+	times ++;
 	msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 257, 0);
-	cout << "Got message: " << msgbuf1.msg << endl;
-	return 0;
+	cout << "257 "<<times<<" message: " << msgbuf1.msg << endl;
+}	return 0;
 }

@@ -1,16 +1,9 @@
-//
-//  main.cpp
-//  Assign2
-//
-//  Created by Crystal Chun on 10/2/17.
-//  Copyright © 2017 Crystal Chun. All rights reserved.
-//
-
 #include <iostream>
 #include <sys/ipc.h>
 #include <sys/msg.h>
 
 using namespace std;
+
 struct buf {
     long mtype;
     int msg;
@@ -27,15 +20,20 @@ int main(int argc, const char * argv[]) {
     // Generate random number
     
     srand((unsigned)time(0));
+    int times = 0;
     while(true) { 
-    int num = rand();
-    //cout << num << endl;
-    if(num % 257 == 0)
-    {
-        msgsnd(qid,(struct msgbuf*)& msgbuf1, size, 0);
-        cout << num;
-	break;
-    }
+	    int num = rand();
+	    //cout << num << endl;
+	    if(num % 257 == 0)
+	    {
+		msgbuf1.msg = num;
+		msgsnd(qid,(struct msgbuf*)& msgbuf1, size, 0);
+		cout << times<< ". "<< num << endl;
+		if(times > 20) {
+			break;
+		}
+		times ++;
+	    }
     }
     
     return 0;
