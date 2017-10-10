@@ -27,11 +27,16 @@ int main(int argc, const char * argv[]) {
             msgbuf1.mtype = 897;
             msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
         }
-        else
+        else if(msgbuf1.mtype == 257)
         {
             // Send away
             cout <<"Receiver 1, got 257,message: "<< msgbuf1.msg<< " sending out . . ." << endl;
             msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+        }
+        else{
+            // Took out ack message, send back out
+            cout << "Recever 1 took ack message 897, sending back out . . . " << endl;
+            msgsnd(qid,(struct msgbuf *)&msgbuf1, size, 0);
         }
         
     }

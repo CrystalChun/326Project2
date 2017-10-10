@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
     srand((unsigned)time(0));
     // Generate random number
 	int times = 0;
-    while(times < 5000){
+    while(times < 5){
     	int num = rand();
     	if(num % 251 == 0)
     	{

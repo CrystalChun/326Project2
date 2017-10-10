@@ -36,10 +36,10 @@ int main(int argc, const char* argv[]) {
             cout <<"Receiver 2, got 251, message "<<msgbuf1.msg <<" sending out . . ." << endl;
             msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
         }
-	else {
-		cout << "Got ack, sending to 897" << endl;
-		msgsnd(qid,(struct msgbuf*)&msgbuf1, size, 0);
-}
+        else {
+            cout << "Got ack, sending to 897" << endl;
+            msgsnd(qid,(struct msgbuf*)&msgbuf1, size, 0);
+        }
         
     }
     cout << "Reached " << times << " messages. Terminating . . .";
