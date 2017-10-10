@@ -23,7 +23,7 @@ int main(int argc, const char * argv[]) {
                 break;
             }
             else if(num % 997 == 0)
-    		{
+    		{msgbuf1.mtype = 997;
                 msgbuf1.msg = num;
                 msgsnd(qid,(struct msgbuf*)& msgbuf1, size, 0);
         		cout <<times <<": " << num <<endl;

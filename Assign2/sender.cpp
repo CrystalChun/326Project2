@@ -27,7 +27,7 @@ int main(int argc, const char * argv[]) {
             times ++;
             msgbuf1.msg = num;
         	msgsnd(qid,(struct msgbuf*)& msgbuf1, size, 0);
-        	cout <<times <<". " << num <<endl;
+        	cout <<"251 sender " <<times <<". " << num <<endl;
     	}
     }
     cout << "251 terminating... Sent: " << times << " messages.";

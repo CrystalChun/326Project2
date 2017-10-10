@@ -30,7 +30,7 @@ int main(int argc, const char * argv[]) {
         else
         {
             // Send away
-            cout <<"Receiver 1, got 257, sending out . . ." << endl;
+            cout <<"Receiver 1, got 257,message: "<< msgbuf1.msg<< " sending out . . ." << endl;
             msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
         }
         
