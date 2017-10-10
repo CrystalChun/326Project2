@@ -14,9 +14,27 @@ int main(int argc, const char* argv[]) {
 	msgbuf1.mtype = 257;
 	int size = sizeof(msgbuf1)-sizeof(long);
 	int times = 0;
-	while(times < 21) {
-	times ++;
-	msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 257, 0);
-	cout << "257 "<<times<<" message: " << msgbuf1.msg << endl;
-}	return 0;
+    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 0, 0) > -1 && times < 5000)
+    {
+        cout << "Got message #" << ++times;
+        if(msgbuf1.mtype == 257)
+        {
+            cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+        }
+        else if(msgbuf1.mtype == 997)
+        {
+            cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+            cout << "Sending ack to 997 . . ." << endl;
+            msgbuf1.mtype = 897;
+            msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+        }
+        else
+        {
+            // Send away
+            cout <<"Receiver 2, got 251, sending out . . ." << endl;
+            msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+        }
+        
+    }
+    cout << "Reached " << times << " messages. Terminating . . .";
 }

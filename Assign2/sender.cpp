@@ -20,20 +20,17 @@ int main(int argc, const char * argv[]) {
     srand((unsigned)time(0));
     // Generate random number
 	int times = 0;
-    while(times < 20){
-	 
+    while(times < 5000){
     	int num = rand();
-//    	cout << num << endl;
     	if(num % 251 == 0)
     	{
-	times ++;
-		msgbuf1.msg = num;
+            times ++;
+            msgbuf1.msg = num;
         	msgsnd(qid,(struct msgbuf*)& msgbuf1, size, 0);
         	cout <<times <<". " << num <<endl;
-	//	break;
     	}
     }
-    
+    cout << "251 terminating... Sent: " << times << " messages.";
     return 0;
 }
 

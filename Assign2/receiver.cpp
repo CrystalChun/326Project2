@@ -9,24 +9,31 @@ struct buf {
 // Receiver - 251 and 997, both must terminate before this can terminate
 int main(int argc, const char * argv[]) {
 	buf msgbuf1;
-	buf msgbuf2; 
 	int qid = msgget(ftok(".",'u'),IPC_EXCL|IPC_CREAT|0600);
 	cout <<"qid:" <<qid<<endl;
 	int size = sizeof(msgbuf1)-sizeof(long);
 	int times = 0;
-	while(times < 21) {
-		
-		msgrcv(qid, (struct msgbuf *) & msgbuf1, size, 251, 0);
-		times ++;
-		cout  << "Receiver 251 " << times;
-		cout << " message:" << msgbuf1.msg << endl;
-		msgrcv(qid, (struct msgbuf *) &msgbuf2, size, 0, 0);
-		if(msgbuf2.mtype == 257) {
-			cout << msgbuf2.mtype << ": " << msgbuf2.msg << endl; msgsnd(qid, (struct msgbuf *) &msgbuf2, size, 0);
-		}
-		else {
-			cout << "Not 257 " <<msgbuf2.msg << endl;
-		}
-	}
+    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 0, 0) > -1)
+    {
+        cout << "Got message #" << ++times;
+        if(msgbuf1.mtype == 251)
+        {
+            cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+        }
+        else if(msgbuf1.mtype == 997)
+        {
+            cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+            cout << "Sending ack to 997 . . ." << endl;
+            msgbuf1.mtype = 897;
+            msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+        }
+        else
+        {
+            // Send away
+            cout <<"Receiver 1, got 257, sending out . . ." << endl;
+            msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+        }
+        
+    }
 	return 0;
 }

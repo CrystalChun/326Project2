@@ -29,12 +29,13 @@ int main(int argc, const char * argv[]) {
 		msgbuf1.msg = num;
 		msgsnd(qid,(struct msgbuf*)& msgbuf1, size, 0);
 		cout << times<< ". "<< num << endl;
-		if(times > 20) {
+		if(times > 3000) {
 			break;
 		}
-		times ++;
+            times ++;
 	    }
     }
+    cout << "257 terminating ... Sent " << times << " messages.";
     
     return 0;
 }

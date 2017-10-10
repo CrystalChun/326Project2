@@ -19,16 +19,16 @@ int main(int argc, const char * argv[]) {
     	while(true){ 
     		int num = rand();
 //    		cout << num << endl;
-		if(num < 100) {
-			break;
-		}
-    		else if(num % 997 == 0)
+            if(num < 100) {
+                break;
+            }
+            else if(num % 997 == 0)
     		{
-        		msgbuf1.msg = num;
-			msgsnd(qid,(struct msgbuf*)& msgbuf1, size, 0);
+                msgbuf1.msg = num;
+                msgsnd(qid,(struct msgbuf*)& msgbuf1, size, 0);
         		cout <<times <<": " << num <<endl;
-			msgrcv(qid,(struct msgbuf*)&msgbuf1,size,997,0);
-			cout << "Acknowledge: " << msgbuf1.msg << endl;
+                msgrcv(qid,(struct msgbuf*)&msgbuf1,size,897,0);
+                cout << "Acknowledge: " << msgbuf1.msg << endl;
     		}
    	 }
     
