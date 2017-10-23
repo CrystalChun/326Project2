@@ -7,6 +7,7 @@ struct buf {
 	long mtype;
 	int msg;
 };
+// 997 sender
 int main(int argc, const char * argv[]) { 
 	buf msgbuf1;
     msgbuf1.mtype = 997;

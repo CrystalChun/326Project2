@@ -18,7 +18,12 @@ int main(int argc, const char * argv[]) {
         cout << "Got message #" << ++times;
         if(msgbuf1.mtype == 251)
         {
-            cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+            if(msgbuf1.msg == 1000) {
+                cout << "Sender 251 terminated." << endl;
+            } else {
+                cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+        
+            }
         }
         else if(msgbuf1.mtype == 997)
         {
