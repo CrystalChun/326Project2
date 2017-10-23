@@ -28,12 +28,15 @@ int main(int argc, const char * argv[]) {
         
 	    if(num % 257 == 0) {
             msgbuf1.msg = num;
+            msgbuf1.mtype = 257;
             msgsnd(qid,(struct msgbuf*) &msgbuf1, size, 0);
             cout << "Sender 257, message #" << times << ", message: " << num << endl;
-            if(times > 3000) {
+            
+            times ++;
+            msgrcv(qid, (struct msgbuf*) &msgbuf1, size, 50, 0);
+            if(msgbuf1.msg == 0) {
                 break;
             }
-            times ++;
 	    }
     }
     cout << "257 terminating ... Sent " << times << " messages.";

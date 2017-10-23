@@ -22,6 +22,9 @@ int main(int argc, const char* argv[]) {
         {
 		times++;
             cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+            msgbuf1.mtype = 50;
+            msgbuf1.msg = 1;
+            msgsnd(qid, (struct msgbuf*) &msgbuf1, size, 0);
         }
         else if(msgbuf1.mtype == 997)
         {
@@ -42,15 +45,20 @@ int main(int argc, const char* argv[]) {
             msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
         }
         else {
-            cout << "Got ack, sending to 897" << endl;
+            cout << "Got random message, sending out..." << endl;
             msgsnd(qid,(struct msgbuf*)&msgbuf1, size, 0);
         }
         
     }
+    msgbuf1.mtype = 50;
+    msgbuf1.msg = 0;
+    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
     cout << "Reached " << times << " messages. Terminating . . .";
     while(true) {
         struct msqid_ds bufa;
         int remove = msgctl(qid, IPC_STAT, &bufa);
+        if(bufa.msg_qnum <=0) { break; }
         cout << "Num messages: " << bufa.msg_qnum << endl;
     }
+    msgctl(qid, IPC_RMID, NULL);
 }

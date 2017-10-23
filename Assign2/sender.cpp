@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
     int size = sizeof(msgbuf1) - sizeof(msgbuf1.mtype);
     
     // Get qid
-    int qid = msgget(ftok(".",'u'),IPC_EXCL|IPC_CREAT|0600);
+    int qid = msgget(ftok(".",'u'),0);
     cout << "qid: " << qid << endl;
     srand((unsigned)time(0));
 	int times = 0;
