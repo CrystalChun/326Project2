@@ -25,6 +25,9 @@ int main(int argc, const char * argv[]) {
         int num = rand();
         
         if(num < 100) {
+            cout << "Sender 997 generated number less than 100 " <<endl;
+            msgbuf1.msg = num;
+            msgsnd(qid, (struct msgbuf*) &msgbuf1, size, 0);
             break;
         }
         else if(num % 997 == 0) {

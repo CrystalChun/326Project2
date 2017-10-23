@@ -12,14 +12,17 @@ int main(int argc, const char * argv[]) {
 	int qid = msgget(ftok(".",'u'),IPC_EXCL|IPC_CREAT|0600);
 	cout <<"qid:" <<qid<<endl;
 	int size = sizeof(msgbuf1)-sizeof(long);
+    bool rec1 = true;
+    bool rec2 = true;
 	int times = 0;
-    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 0, 0) > -1)
+    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 0, 0) > -1 &&( rec1|| rec2))
     {
         cout << "Got message #" << ++times;
         if(msgbuf1.mtype == 251)
         {
             if(msgbuf1.msg == 1000) {
                 cout << "Sender 251 terminated." << endl;
+                rec1 = false;
             } else {
                 cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
         
@@ -27,10 +30,16 @@ int main(int argc, const char * argv[]) {
         }
         else if(msgbuf1.mtype == 997)
         {
-            cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
-            cout << "Sending ack to 997 . . ." << endl;
-            msgbuf1.mtype = 897;
-            msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+            if(msgbuf1.msg < 100) {
+                cout <<"997 is terminating " << endl;
+                rec2 = false;
+            } else {
+                cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+                cout << "Sending ack to 997 . . ." << endl;
+
+                msgbuf1.mtype = 897;
+                msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+            }
         }
         else if(msgbuf1.mtype == 257)
         {

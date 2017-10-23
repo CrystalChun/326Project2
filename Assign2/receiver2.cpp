@@ -24,11 +24,15 @@ int main(int argc, const char* argv[]) {
         }
         else if(msgbuf1.mtype == 997)
         {
-		times++;
-            cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
-            cout << "Sending ack to 997 . . ." << endl;
-            msgbuf1.mtype = 897;
-            msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+		    if(msgbuf1.msg < 100) {
+                    cout << "997 terminating" << endl;
+            } else {
+                times++;
+                cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+                cout << "Sending ack to 997 . . ." << endl;
+                msgbuf1.mtype = 897;
+                msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+            }
         }
         else if(msgbuf1.mtype == 251)
         {
