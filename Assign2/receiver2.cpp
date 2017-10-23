@@ -1,4 +1,5 @@
 #include <sys/ipc.h>
+#include <sys/types.h>
 #include <sys/msg.h>
 #include <iostream>
 using namespace std;
@@ -47,4 +48,9 @@ int main(int argc, const char* argv[]) {
         
     }
     cout << "Reached " << times << " messages. Terminating . . .";
+    while(true) {
+        struct msqid_ds bufa;
+        int remove = msgctl(qid, IPC_STAT, &bufa);
+        cout << "Num messages: " << bufa.msg_qnum << endl;
+    }
 }

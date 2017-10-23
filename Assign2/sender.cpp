@@ -3,7 +3,7 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <signal.h>
-#include "get_info.hpp"
+
 using namespace std;
 
 struct buf {
@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
     int size = sizeof(msgbuf1) - sizeof(msgbuf1.mtype);
     
     // Get qid
-    int qid = msgget(ftok(".",'u'),0);
+    int qid = msgget(ftok(".",'u'),IPC_EXCL|IPC_CREAT|0600);
     cout << "qid: " << qid << endl;
     srand((unsigned)time(0));
 	int times = 0;
