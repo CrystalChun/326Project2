@@ -43,7 +43,7 @@ void end(int sigNum) {
     if(sigNum == SIGUSR1) {
         cout << "Ending . .. "<<endl;
         buf msgbuf2;
-        msgbuf2.mtype = 251;
+        msgbuf2.mtype = 1248;
         int size = sizeof(msgbuf2)-sizeof(msgbuf2.mtype);
         msgbuf2.msg = 1000;
         int qid = msgget(ftok(".",'u'),0);
