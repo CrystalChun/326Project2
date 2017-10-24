@@ -28,13 +28,20 @@ int main(int argc, const char * argv[]) {
             cout << "Sender 997 generated number less than 100 " <<endl;
             msgbuf1.msg = num;
             cout <<"num: " << num << endl;
-            msgsnd(qid, (struct msgbuf*) &msgbuf1, size, 0);
-            msgsnd(qid, (struct msgbuf*) &msgbuf1, size, 0);
+            msgsnd(qid, (struct msgbuf*) &msgbuf1, 1248, 0);
+            msgsnd(qid, (struct msgbuf*) &msgbuf1, 1254, 0);
 
             break;
         }
         else if(num % 997 == 0) {
-            msgbuf1.mtype = 997;
+            int send = rand() % 2;
+            cout << send << endl;
+            if(send == 1) {
+                msgbuf1.mtype = 1254;
+            } else {
+                msgbuf1.mtype = 1248;
+            }
+            
             msgbuf1.msg = num;
             times ++;
             

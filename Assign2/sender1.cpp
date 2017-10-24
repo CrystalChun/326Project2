@@ -12,7 +12,7 @@ struct buf {
 // 257 Sender
 int main(int argc, const char * argv[]) {
     buf msgbuf1;
-    msgbuf1.mtype = 257;
+    msgbuf1.mtype = 1254;
     int size = sizeof(msgbuf1) - sizeof(msgbuf1.mtype);
     
     // Get qid

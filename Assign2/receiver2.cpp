@@ -15,10 +15,10 @@ int main(int argc, const char* argv[]) {
 	msgbuf1.mtype = 257;
 	int size = sizeof(msgbuf1)-sizeof(long);
 	int times = 0;
-    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 0, 0) > -1 && times < 5000)
+    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 1254, 0) > -1 && times < 5000)
     {
         cout << "Message #" << times<<"Mtype: " << msgbuf1.mtype << endl;
-        if(msgbuf1.mtype == 257)
+        if(msgbuf1.msg % 257 == 0)
         {
 		times++;
             cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
@@ -26,7 +26,7 @@ int main(int argc, const char* argv[]) {
             msgbuf1.msg = 1;
             msgsnd(qid, (struct msgbuf*) &msgbuf1, size, 0);
         }
-        else if(msgbuf1.mtype == 997)
+        else
         {
 		    if(msgbuf1.msg < 100) {
                     cout << "997 terminating" << endl;
@@ -38,17 +38,6 @@ int main(int argc, const char* argv[]) {
                 msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
             }
         }
-        else if(msgbuf1.mtype == 251)
-        {
-            // Send away
-            cout <<"Receiver 2, got 251, message "<<msgbuf1.msg <<" sending out . . ." << endl;
-            msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
-        }
-        else {
-            cout << "Got random message, sending out..." << endl;
-            msgsnd(qid,(struct msgbuf*)&msgbuf1, size, 0);
-        }
-        
     }
     msgbuf1.mtype = 50;
     msgbuf1.msg = 0;
