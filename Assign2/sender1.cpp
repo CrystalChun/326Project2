@@ -13,7 +13,7 @@ struct buf {
 // 257 Sender
 int main(int argc, const char * argv[]) {
     buf msgbuf1;
-    msgbuf1.mtype = 1254;
+    msgbuf1.mtype = 257;
     int size = sizeof(msgbuf1) - sizeof(msgbuf1.mtype);
     msgbuf1.is997 = false;
     // Get qid
@@ -29,7 +29,7 @@ int main(int argc, const char * argv[]) {
         
 	    if(num % 257 == 0) {
             msgbuf1.msg = num;
-            msgbuf1.mtype = 1254;
+            msgbuf1.mtype = 257;
             msgsnd(qid,(struct msgbuf*) &msgbuf1, size, 0);
             cout << "Sender 257, message #" << times << ", message: " << num << endl;
             

@@ -16,10 +16,10 @@ int main(int argc, const char* argv[]) {
 	msgbuf1.mtype = 257;
 	int size = sizeof(msgbuf1)-sizeof(long);
 	int times = 0;
-    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 1254, 0) > -1 && times < 5000)
+    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 0, 0) > -1 && times < 5000)
     {
         cout << "Message # " << times<<endl;
-        if(msgbuf1.msg % 257 == 0 && !msgbuf1.is997)
+        if(msgbuf1.mtype== 257)
         {
 		times++;
             cout << "Sender: 257 "<< endl<< "Message: " << msgbuf1.msg << endl;
@@ -27,7 +27,7 @@ int main(int argc, const char* argv[]) {
             msgbuf1.msg = 1;
             msgsnd(qid, (struct msgbuf*) &msgbuf1, size, 0);
         }
-        else
+        else if(msgbuf1.is997)
         {
 		    if(msgbuf1.msg < 100) {
                     cout << "997 terminating" << endl;
@@ -38,6 +38,9 @@ int main(int argc, const char* argv[]) {
                 msgbuf1.mtype = 897;
                 msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
             }
+        } else {
+            msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
+            cout << "Sending out: " << msgbuf1.mtype << endl;
         }
     }
     msgbuf1.mtype = 50;

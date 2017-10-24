@@ -17,10 +17,10 @@ int main(int argc, const char * argv[]) {
     bool rec2 = true;
 	int times = 0;
     
-    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 1248, 0) > -1 &&( rec1|| rec2))
+    while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 0, 0) > -1 &&( rec1|| rec2))
     {
         cout << "Got message # " << ++times << endl;
-        if((msgbuf1.msg % 251 == 0 && !msgbuf1.is997) || msgbuf1.msg == 1000)
+        if(msgbuf1.mtype == 251)
         {
             if(msgbuf1.msg == 1000) {
                 cout << "Sender 251 terminated." << endl;
@@ -30,7 +30,7 @@ int main(int argc, const char * argv[]) {
         
             }
         }
-        else
+        else if(msgbuf1.is997)
         {
             if(msgbuf1.msg < 100) {
                 cout <<"997 is terminating " << endl;
@@ -42,6 +42,10 @@ int main(int argc, const char * argv[]) {
                 msgbuf1.mtype = 897;
                 msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
             }
+        }
+        else {
+            msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
+            cout << "Sending out: " <<msgbuf1.mtype << endl;
         }
     }
 	return 0;

@@ -16,7 +16,7 @@ void end(int sigNum);
 // Sender - 251
 int main(int argc, const char * argv[]) {
     buf msgbuf1;
-    msgbuf1.mtype = 1248;
+    msgbuf1.mtype = 251;
     msgbuf1.is997 = false;
     int size = sizeof(msgbuf1) - sizeof(msgbuf1.mtype);
     
