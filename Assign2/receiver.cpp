@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
     while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 1248, 0) > -1 &&( rec1|| rec2))
     {
         cout << "Got message # " << ++times << endl;
-        if(msgbuf1.mtype % 251 == 0)
+        if(msgbuf1.msg % 251 == 0)
         {
             if(msgbuf1.msg == 1000) {
                 cout << "Sender 251 terminated." << endl;
