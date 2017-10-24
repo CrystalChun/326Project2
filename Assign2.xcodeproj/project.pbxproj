@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B1A25FC1F9E7312002157FE /* get_info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B1A25FA1F9E7312002157FE /* get_info.cpp */; };
 		1B5E8F8D1F8D7374004BB7A5 /* receiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B5E8F881F8D7374004BB7A5 /* receiver.cpp */; };
 		1B5E8F8E1F8D7374004BB7A5 /* sender2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B5E8F891F8D7374004BB7A5 /* sender2.cpp */; };
 		1B5E8F8F1F8D7374004BB7A5 /* receiver2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B5E8F8A1F8D7374004BB7A5 /* receiver2.cpp */; };
@@ -28,8 +27,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B1A25FA1F9E7312002157FE /* get_info.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = get_info.cpp; sourceTree = "<group>"; };
-		1B1A25FB1F9E7312002157FE /* get_info.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = get_info.hpp; sourceTree = "<group>"; };
 		1B3CADE11F83400A007BF00D /* Assign2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Assign2; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B5E8F881F8D7374004BB7A5 /* receiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = receiver.cpp; sourceTree = "<group>"; };
 		1B5E8F891F8D7374004BB7A5 /* sender2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sender2.cpp; sourceTree = "<group>"; };
@@ -73,8 +70,6 @@
 				1B5E8F8B1F8D7374004BB7A5 /* sender.cpp */,
 				1B5E8F8C1F8D7374004BB7A5 /* sender1.cpp */,
 				1B5E8F891F8D7374004BB7A5 /* sender2.cpp */,
-				1B1A25FA1F9E7312002157FE /* get_info.cpp */,
-				1B1A25FB1F9E7312002157FE /* get_info.hpp */,
 			);
 			path = Assign2;
 			sourceTree = "<group>";
@@ -138,7 +133,6 @@
 			files = (
 				1B5E8F8D1F8D7374004BB7A5 /* receiver.cpp in Sources */,
 				1B5E8F8F1F8D7374004BB7A5 /* receiver2.cpp in Sources */,
-				1B1A25FC1F9E7312002157FE /* get_info.cpp in Sources */,
 				1B5E8F911F8D7374004BB7A5 /* sender1.cpp in Sources */,
 				1B5E8F8E1F8D7374004BB7A5 /* sender2.cpp in Sources */,
 				1B5E8F901F8D7374004BB7A5 /* sender.cpp in Sources */,
