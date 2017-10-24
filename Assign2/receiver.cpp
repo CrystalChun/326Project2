@@ -5,6 +5,7 @@ using namespace std;
 struct buf {
 	long mtype;
 	int msg;
+    bool is997;
 };
 // Receiver - 251 and 997, both must terminate before this can terminate
 int main(int argc, const char * argv[]) {
@@ -19,7 +20,7 @@ int main(int argc, const char * argv[]) {
     while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 1248, 0) > -1 &&( rec1|| rec2))
     {
         cout << "Got message # " << ++times << endl;
-        if(msgbuf1.msg % 251 == 0 || msgbuf1.msg == 1000)
+        if((msgbuf1.msg % 251 == 0 && !msgbuf1.is997) || msgbuf1.msg == 1000)
         {
             if(msgbuf1.msg == 1000) {
                 cout << "Sender 251 terminated." << endl;

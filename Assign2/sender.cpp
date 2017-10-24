@@ -9,6 +9,7 @@ using namespace std;
 struct buf {
     long mtype;
     int msg;
+    bool is997;
 };
 
 void end(int sigNum);
@@ -16,7 +17,7 @@ void end(int sigNum);
 int main(int argc, const char * argv[]) {
     buf msgbuf1;
     msgbuf1.mtype = 1248;
-    
+    msgbuf1.is997 = false;
     int size = sizeof(msgbuf1) - sizeof(msgbuf1.mtype);
     
     // Get qid
@@ -47,7 +48,9 @@ void end(int sigNum) {
         int size = sizeof(msgbuf2)-sizeof(msgbuf2.mtype);
         msgbuf2.msg = 1000;
         int qid = msgget(ftok(".",'u'),0);
+        cout << qid << " qid" << endl;
         msgsnd(qid, (struct msgbuf *) &msgbuf2, size, 0);
+        cout << "251 terminated. " <<endl;
         exit(0);
     }
 }

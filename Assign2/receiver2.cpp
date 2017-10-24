@@ -6,6 +6,7 @@ using namespace std;
 struct buf {
 	long mtype;
 	int msg;
+    bool is997;
 };
 // Receiver - 257 and 997
 int main(int argc, const char* argv[]) {
@@ -18,7 +19,7 @@ int main(int argc, const char* argv[]) {
     while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 1254, 0) > -1 && times < 5000)
     {
         cout << "Message # " << times<<endl;
-        if(msgbuf1.msg % 257 == 0)
+        if(msgbuf1.msg % 257 == 0 && !msgbuf1.is997)
         {
 		times++;
             cout << "Sender: 257 "<< endl<< "Message: " << msgbuf1.msg << endl;
@@ -42,12 +43,15 @@ int main(int argc, const char* argv[]) {
     msgbuf1.mtype = 50;
     msgbuf1.msg = 0;
     msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
-    cout << "Reached " << times << " messages. Terminating . . .";
+    cout << "Reached " << times << " messages. Terminating . . ." << endl;
     while(true) {
         struct msqid_ds bufa;
         int remove = msgctl(qid, IPC_STAT, &bufa);
+        cout << "something left " << endl;
         if(bufa.msg_qnum <=0) { break; }
-        cout << "Num messages: " << bufa.msg_qnum << endl;
+    
     }
+    
     msgctl(qid, IPC_RMID, NULL);
+cout << "Terminated " << endl;
 }

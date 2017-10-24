@@ -6,11 +6,13 @@ using namespace std;
 struct buf {
 	long mtype;
 	int msg;
+    bool is997;
 };
 // 997 sender
 int main(int argc, const char * argv[]) { 
 	buf msgbuf1;
     msgbuf1.mtype = 997;
+    msgbuf1.is997 = true;
     int size = sizeof(msgbuf1) - sizeof(msgbuf1.mtype);
     
     // Get qid

@@ -7,6 +7,7 @@ using namespace std;
 struct buf {
     long mtype;
     int msg;
+    bool is997;
 };
 
 // 257 Sender
@@ -14,7 +15,7 @@ int main(int argc, const char * argv[]) {
     buf msgbuf1;
     msgbuf1.mtype = 1254;
     int size = sizeof(msgbuf1) - sizeof(msgbuf1.mtype);
-    
+    msgbuf1.is997 = false;
     // Get qid
     int qid = msgget(ftok(".",'u'),0);
     cout << "qid: " << qid << endl;
