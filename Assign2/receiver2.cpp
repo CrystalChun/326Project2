@@ -17,11 +17,11 @@ int main(int argc, const char* argv[]) {
 	int times = 0;
     while(msgrcv(qid,(struct msgbuf *) &msgbuf1, size, 1254, 0) > -1 && times < 5000)
     {
-        cout << "Message #" << times<<"Mtype: " << msgbuf1.mtype << endl;
+        cout << "Message # " << times<<endl;
         if(msgbuf1.msg % 257 == 0)
         {
 		times++;
-            cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+            cout << "Sender: 257 "<< endl<< "Message: " << msgbuf1.msg << endl;
             msgbuf1.mtype = 50;
             msgbuf1.msg = 1;
             msgsnd(qid, (struct msgbuf*) &msgbuf1, size, 0);
@@ -32,7 +32,7 @@ int main(int argc, const char* argv[]) {
                     cout << "997 terminating" << endl;
             } else {
                 times++;
-                cout << "Sender: " << msgbuf1.mtype << endl<< "Message: " << msgbuf1.msg << endl;
+                cout << "Sender: 997 "  << endl<< "Message: " << msgbuf1.msg << endl;
                 cout << "Sending ack to 997 . . ." << endl;
                 msgbuf1.mtype = 897;
                 msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);

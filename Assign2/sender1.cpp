@@ -28,7 +28,7 @@ int main(int argc, const char * argv[]) {
         
 	    if(num % 257 == 0) {
             msgbuf1.msg = num;
-            msgbuf1.mtype = 257;
+            msgbuf1.mtype = 1254;
             msgsnd(qid,(struct msgbuf*) &msgbuf1, size, 0);
             cout << "Sender 257, message #" << times << ", message: " << num << endl;
             
