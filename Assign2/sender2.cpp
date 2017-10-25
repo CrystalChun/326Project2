@@ -18,6 +18,7 @@ int main(int argc, const char * argv[]) {
     int times = 0; // The number of times 997 sent a message
     bool term = false; // Whether or not receiver 2 terminated
     srand((unsigned)time(0));
+    int lastSent = 0;
     
     // Get qid
 	int qid = msgget(ftok(".",'u'),0);
@@ -72,10 +73,12 @@ int main(int argc, const char * argv[]) {
             // Checks if receiver 2 has terminated
             if(msgbuf1.msg == 1000) {
                 term = true;
+                lastSent = num;
            }
        }
     }
     
     cout << "Sender 997 terminating . . . Messages sent: " << times << endl;
+    cout << "Last sent to receiver 2: " << lastSent << endl;
     return 0;
 }
