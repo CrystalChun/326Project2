@@ -87,12 +87,6 @@ int main(int argc, const char* argv[]) {
         }
     }
     
-    // Sends flag to 257 sender to tell it to terminate
-    msgbuf1.mtype = 50;
-    msgbuf1.msg = 0;
-    msgbuf1.is997 = false;
-    
-    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
     cout << "Reached " << times << " messages. Terminating . . ." << endl;
     
     // Waits until all messages are removed from the queue
