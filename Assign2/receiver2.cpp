@@ -24,7 +24,7 @@ int main(int argc, const char* argv[]) {
     // Listens to mtype 1254
     while(times < 5000)
     {
-        msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1254, 0) > -1;
+        msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1254, 0);
         cout << "Message # " << ++times <<endl;
         
         // Checks if the sender is 257 or 997
@@ -32,12 +32,10 @@ int main(int argc, const char* argv[]) {
         {
             cout << "Sender: 257, Message: " << msgbuf1.msg << endl;
             
-            msgbuf1.mtype = 50;
-            msgbuf1.msg = 1;
-            msgbuf1.is997 = false;
-            
             if (times >= 5000) {
+                msgbuf1.mtype = 50;
                 msgbuf1.msg = 0;
+                msgbuf1.is997 = false;
                 msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
                 
                 // If 997 hasn't terminated, get last message and terminate connection
@@ -49,6 +47,11 @@ int main(int argc, const char* argv[]) {
                     
                     msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
                 }
+            } else {
+                msgbuf1.mtype = 50;
+                msgbuf1.msg = 1;
+                msgbuf1.is997 = false;
+                msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
             }
             
         } else {
