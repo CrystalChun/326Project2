@@ -38,7 +38,7 @@ int main(int argc, const char * argv[]) {
            
             // Tests if sender 997 terminated
             if(msgbuf1.msg < 100) {
-                cout <<"997 is terminating " << endl;
+                cout << "997 is terminating " << endl;
                 rec2 = false;
             } else {
                 cout << "Sender: 997, Message: " << msgbuf1.msg << endl;

@@ -27,7 +27,7 @@ int main(int argc, const char* argv[]) {
         cout << "Message # " << ++times <<endl;
         
         // Checks if the sender is 257 or 997
-        if(msgbuf1.msg % 257 == 0 && !msgbuf1.is997)
+        if(!msgbuf1.is997)
         {
             cout << "Sender: 257, Message: " << msgbuf1.msg << endl;
             
