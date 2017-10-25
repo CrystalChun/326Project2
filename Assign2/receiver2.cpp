@@ -35,7 +35,21 @@ int main(int argc, const char* argv[]) {
             msgbuf1.msg = 1;
             msgbuf1.is997 = false;
             
-            msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
+            if (times >= 5000) {
+                msgbuf1.msg = 0;
+                msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
+                
+                // If 997 hasn't terminated, get last message and terminate connection
+                if(!term) {
+                    msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1254, 0);
+                    msgbuf1.mtype = 897;
+                    msgbuf1.msg = 1000;
+                    msgbuf1.is997 = true;
+                    
+                    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
+                }
+            }
+            
         } else {
             // Tests to see if sender 997 is terminating
 		    if(msgbuf1.msg < 100) {
@@ -46,6 +60,11 @@ int main(int argc, const char* argv[]) {
                 cout << "Sending ack to 997 . . ." << endl;
                 msgbuf1.mtype = 897;
                 msgbuf1.is997 = true;
+                
+                // Tells 997 to terminate if this is terminating
+                if(times >= 5000) {
+                    msgbuf1.msg = 1000;
+                }
                 msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
                 term = false;
             }
@@ -59,15 +78,6 @@ int main(int argc, const char* argv[]) {
     
     msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
     cout << "Reached " << times << " messages. Terminating . . ." << endl;
-    
-    // Sends termination flag to 997 sender if 997 hasn't terminated
-    if(!term) {
-        msgbuf1.mtype = 897;
-        msgbuf1.msg = 1000;
-        msgbuf1.is997 = true;
-        
-        msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
-    }
     
     // Waits until all messages are removed from the queue
     while(true) {
