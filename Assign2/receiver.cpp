@@ -22,6 +22,7 @@ int main(int argc, const char * argv[]) {
         cout << "Got message # " << ++times << endl;
         if((msgbuf1.msg % 251 == 0 && !msgbuf1.is997) || msgbuf1.msg == 1000)
         {
+           
             if(msgbuf1.msg == 1000) {
                 cout << "Sender 251 terminated." << endl;
                 rec1 = false;
@@ -32,15 +33,17 @@ int main(int argc, const char * argv[]) {
         }
         else
         {
+           
             if(msgbuf1.msg < 100) {
                 cout <<"997 is terminating " << endl;
                 rec2 = false;
             } else {
                 cout << "Sender: 997 "<< endl<< "Message: " << msgbuf1.msg << endl;
                 cout << "Sending ack to 997 . . ." << endl;
-
+                msgbuf1.is997 = true;
                 msgbuf1.mtype = 897;
                 msgsnd(qid,(struct msgbuf *) &msgbuf1, size, 0);
+                cout << "Sent ack to 997: " << msgbuf1.msg << endl;
             }
         }
     }
