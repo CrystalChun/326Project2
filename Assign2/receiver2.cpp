@@ -22,8 +22,9 @@ int main(int argc, const char* argv[]) {
 	int qid = msgget(ftok(".",'u'),0);
 
     // Listens to mtype 1254
-    while(msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1254, 0) > -1 && times < 5000)
+    while(times < 5000)
     {
+        msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1254, 0) > -1;
         cout << "Message # " << ++times <<endl;
         
         // Checks if the sender is 257 or 997
