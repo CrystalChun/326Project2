@@ -59,6 +59,9 @@ void end(int sigNum) {
         
         msgsnd(qid, (struct msgbuf *) &msgbuf2, size, 0);
         
+        msgbuf2.mtype = 111;
+        msgsnd(qid, (struct msgbuf *) &msgbuf2, size, 0);
+        
         cout << "251 terminated. " <<endl;
         
         exit(0);

@@ -15,6 +15,7 @@ int main(int argc, const char* argv[]) {
 	buf msgbuf1;
  
     bool term = true; // Flag to see if 997 sender terminated
+    bool sen251Term = false;
     int size = sizeof(msgbuf1)-sizeof(long);
     int times = 0; // The number of messages this receiver received
     
@@ -89,16 +90,9 @@ int main(int argc, const char* argv[]) {
     
     cout << "Reached " << times << " messages. Terminating . . ." << endl;
     
-    // Waits until all messages are removed from the queue
-    while(true) {
-        struct msqid_ds bufa;
-        msgctl(qid, IPC_STAT, &bufa);
-        
-        // When the number of messages in queue = 0, break
-        if(bufa.msg_qnum <= 0) {
-            break;
-        }
-    }
+    // Waits until 251 sender is also destroyed
+    msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 111, 0);
+
     
     // Deallocates message queue
     msgctl(qid, IPC_RMID, NULL);
