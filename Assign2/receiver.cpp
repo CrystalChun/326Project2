@@ -21,8 +21,10 @@ int main(int argc, const char * argv[]) {
 	int qid = msgget(ftok(".",'u'),IPC_EXCL|IPC_CREAT|0600);
 
     // Get messages with mtype 1248 while both senders are still active
-    // and the message receive isn't throwing an error
-    while(msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1248, 0) > -1 && (rec1 || rec2)) {
+    while( rec1 || rec2) {
+        
+        msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1248, 0);
+        
         cout << "Got message # " << ++times << endl;
         // Sender 251
         if(!msgbuf1.is997 || msgbuf1.msg == 1000) {

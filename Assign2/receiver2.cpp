@@ -62,14 +62,26 @@ int main(int argc, const char* argv[]) {
             } else {
                 cout << "Sender: 997, Message: " << msgbuf1.msg << endl;
                 cout << "Sending ack to 997 . . ." << endl;
-                msgbuf1.mtype = 897;
-                msgbuf1.is997 = true;
+                
                 
                 // Tells 997 to terminate if this is terminating
                 if(times >= 5000) {
+                    msgbuf1.mtype = 897;
+                    msgbuf1.is997 = true;
                     msgbuf1.msg = 1000;
+                    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
+                    
+                    msgbuf1.mtype = 50;
+                    msgbuf1.msg = 0;
+                    msgbuf1.is997 = false;
+                    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
                 }
-                msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
+                else {
+                    msgbuf1.mtype = 897;
+                    msgbuf1.is997 = true;
+                    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
+                }
+                
                 term = false;
             }
         }
