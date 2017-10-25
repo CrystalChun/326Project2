@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
 	int qid = msgget(ftok(".",'u'),IPC_EXCL|IPC_CREAT|0600);
 
     // Get messages with mtype 1248 while both senders are still active
-    while( rec1 || rec2) {
+    while(rec1 || rec2) {
         
         msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1248, 0);
         

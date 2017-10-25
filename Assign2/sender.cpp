@@ -59,6 +59,7 @@ void end(int sigNum) {
         
         msgsnd(qid, (struct msgbuf *) &msgbuf2, size, 0);
         
+        // Sends alert to receiver 2 to notify that this terminated
         msgbuf2.mtype = 111;
         msgsnd(qid, (struct msgbuf *) &msgbuf2, size, 0);
         
