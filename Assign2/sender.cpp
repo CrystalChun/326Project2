@@ -65,10 +65,10 @@ void end(int sigNum) {
         buf msgbuf2;
         int size = sizeof(msgbuf2) - sizeof(msgbuf2.mtype);
         int qid = msgget(ftok(".",'u'), 0);
-        setupStructAndSend(msgbuf2, 1248, 1000, false, size, qid);
+        setupStructAndSend(msgbuf2, 1248, 1000, false, qid, size);
         
         // Sends alert to receiver 2 to notify that this terminated
-        setupStructAndSend(msgbuf2, 111, 1000, false, size, qid);
+        setupStructAndSend(msgbuf2, 111, 1000, false, qid, size);
         
         cout << "251 terminated. " <<endl;
         
