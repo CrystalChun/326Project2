@@ -1,3 +1,12 @@
+// Crystal Chun 012680952
+// File names associated with this assignment:
+//  receiver.cpp, receiver2.cpp,
+//  sender.cpp, sender1.cpp, sender2.cpp
+// Description:
+//  This is the second receiver (receiver2.cpp)
+//  and it receives messages
+//  from sender 257 and 997.
+
 #include <sys/ipc.h>
 #include <sys/types.h>
 #include <sys/msg.h>

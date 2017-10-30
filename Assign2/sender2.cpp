@@ -1,3 +1,13 @@
+// Crystal Chun 012680952
+// File names associated with this assignment:
+//  receiver.cpp, receiver2.cpp,
+//  sender.cpp, sender1.cpp, sender2.cpp
+// Description:
+//  This is the first sender (997, sender2.cpp).
+//  It sends messages to the first or second receiver
+//  whenever it generates a random number that is
+//  divisible by 997.
+
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <iostream>

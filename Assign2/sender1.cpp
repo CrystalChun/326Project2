@@ -1,3 +1,13 @@
+// Crystal Chun 012680952
+// File names associated with this assignment:
+//  receiver.cpp, receiver2.cpp,
+//  sender.cpp, sender1.cpp, sender2.cpp
+// Description:
+//  This is the first sender (257, sender1.cpp).
+//  It sends messages to the second receiver whenever
+//  it generates a random number that is divisible by
+//  257.
+
 #include <iostream>
 #include <sys/ipc.h>
 #include <sys/msg.h>

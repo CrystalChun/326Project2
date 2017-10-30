@@ -1,3 +1,12 @@
+// Crystal Chun 012680952
+// File names associated with this assignment:
+//  receiver.cpp, receiver2.cpp,
+//  sender.cpp, sender1.cpp, sender2.cpp
+// Description:
+//  This is the first receiver (receiver.cpp)
+//  and it receives messages
+//  from sender 251 and 997.
+
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <iostream>
@@ -37,7 +46,7 @@ int main(int argc, const char * argv[]) {
             } else {
                 cout << "Sender: 251, Message: " << msgbuf1.msg << endl;
             }
-        } else { // Sender 997
+        } else if (msgbuf1.is997 && sen2){ // Sender 997
             
             // Tests if sender 997 terminated
             if(msgbuf1.msg < 100) {
