@@ -103,6 +103,9 @@ int main(int argc, const char* argv[]) {
     // Waits until 251 sender is also destroyed
     msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 111, 0);
     
+    // Waits until receiver 1 has finished
+    msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 111, 0);
+    
     // Deallocates message queue
     msgctl(qid, IPC_RMID, NULL);
     cout << "Terminated message queue" << endl;
