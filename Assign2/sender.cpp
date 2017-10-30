@@ -57,8 +57,9 @@ int main(int argc, const char * argv[]) {
 }
 
 // Listens for kill command for this process
+// @param sigNum: The signal number associated with the kill command
 void end(int sigNum) {
-    if(sigNum == SIGUSR1) { // Kill signal triggered
+    if(sigNum == SIGUSR1) { // Checks if correct kill signal triggered
         cout << "Ending . .. " << endl;
         
         buf msgbuf2;

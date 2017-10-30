@@ -13,6 +13,11 @@
 #include <iostream>
 using namespace std;
 
+void setupStructAndSend(struct buf &, long, int, bool, int, int);
+void send(int, int, struct buf &);
+void terminateReceiver(struct buf &, bool, int, int);
+void deallocateQueue(struct buf &, int, int);
+
 // The msgbuf structure for sending messages between processes
 struct buf {
     long mtype; // M-type for message queue
@@ -24,7 +29,7 @@ struct buf {
 int main(int argc, const char* argv[]) {
     buf msgbuf1;
     
-    bool term = true; // Flag to see if 997 sender terminated
+    bool sender997_Terminated = true; // Flag to see if 997 sender terminated
     int size = sizeof(msgbuf1) - sizeof(long);
     int times = 0; // The number of messages this receiver received
     
@@ -39,76 +44,34 @@ int main(int argc, const char* argv[]) {
         // Checks if the sender is 257 or 997
         if(!msgbuf1.is997) {
             cout << "Sender: 257, Message: " << msgbuf1.msg << endl;
-            
-            // This receiver is terminating
-            if (times >= 5000) {
-                // Send flag to 257 that this receiver is terminating
-                msgbuf1.mtype = 50;
-                msgbuf1.msg = 0;
-                msgbuf1.is997 = false;
-                
-                msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
-                
-                // If 997 hasn't terminated
-                if(!term) {
-                    // get last message from 997
-                    msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1254, 0);
-                    
-                    // tells 997 that it's terminating
-                    msgbuf1.mtype = 897;
-                    msgbuf1.msg = 1000;
-                    msgbuf1.is997 = true;
-                    
-                    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
-                }
-            } else {
-                // Send flag to 257 that this isn't terminating
-                msgbuf1.mtype = 50;
-                msgbuf1.msg = 1;
-                msgbuf1.is997 = false;
-                
-                msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
-            }
+
+            // Send flag to 257 that this isn't terminating
+            setupStructAndSend(msgbuf1, 50, 1, false, qid, size);
         } else {
             // Tests to see if sender 997 is terminating
             if(msgbuf1.msg < 100) {
                 // 997 is terminating
                 cout << "997 terminating" << endl;
-                term = true;
+                sender997_Terminated = true;
             } else {
                 cout << "Sender: 997, Message: " << msgbuf1.msg << endl;
                 cout << "Sending ack to 997 . . ." << endl;
-                
-                // Tests if this receiver got at least 5000 messages and is terminating
-                if(times >= 5000) {
-                    // Tells 997 to terminate if this is terminating
-                    msgbuf1.mtype = 897;
-                    msgbuf1.is997 = true;
-                    msgbuf1.msg = 1000;
-                    
-                    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
-                    
-                    // Flag to 257 to terminate
-                    msgbuf1.mtype = 50;
-                    msgbuf1.msg = 0;
-                    msgbuf1.is997 = false;
-                    
-                    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
-                } else {
-                    // Sends acknowledgement message to 997
-                    msgbuf1.mtype = 897;
-                    msgbuf1.is997 = true;
-                    
-                    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
-                }
-                
-                term = false;
+
+                // Sends acknowledgement message to 997
+                setupStructAndSend(msgbuf1, 897, msgbuf1.msg, true, qid, size);
+                sender997_Terminated = false;
             }
         }
     }
+    terminateReceiver(msgbuf1, sender997_Terminated, qid, size);
     
     cout << "Reached " << times << " messages. Terminating . . ." << endl;
     
+    deallocateQueue(msgbuf1, qid, size);
+    cout << "Terminated and deallocated message queue." << endl;
+}
+
+void deallocateQueue(buf & msgbuf1, int qid, int size) {
     // Waits until 251 sender is also destroyed
     msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 111, 0);
     
@@ -118,4 +81,32 @@ int main(int argc, const char* argv[]) {
     // Deallocates message queue
     msgctl(qid, IPC_RMID, NULL);
     cout << "Terminated message queue" << endl;
+}
+void terminateReceiver(buf & msgbuf1, bool sender997_terminated, int qid, int size) {
+    msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1254, 0);
+    if(msgbuf1.is997) {
+        // Get last 257 message
+        msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1254, 0);
+    } else {
+        // Get last 997 message
+        msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1254, 0);
+    }
+    // Tells 257 to terminate
+    setupStructAndSend(msgbuf1, 50, 0, false, qid, size);
+    
+    // If 997 hasn't terminated, tell it to terminate
+    if(!sender997_terminated) {
+        setupStructAndSend(msgbuf1, 897, 1000, true, qid, size);
+    }
+}
+
+void setupStructAndSend(buf & msgbuf1, long mtype, int msg, bool is997, int qid, int size) {
+    msgbuf1.msg = msg;
+    msgbuf1.mtype = mtype;
+    msgbuf1.is997 = is997;
+    
+    send(qid, size, msgbuf1);
+}
+void send(int qid, int size, buf & msgbuf1) {
+    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
 }
