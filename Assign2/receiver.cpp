@@ -59,6 +59,9 @@ int main(int argc, const char * argv[]) {
     // Tell receiver 2 to deallocate message queue
     msgbuf1.msg = 0;
     msgbuf1.mtype = 111;
+    
     msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
+    
+    cout << "Receiver 1, received " << times << " messages and now terminated." << endl;
     return 0;
 }
