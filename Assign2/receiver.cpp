@@ -43,10 +43,10 @@ int main(int argc, const char * argv[]) {
         msgrcv(qid, (struct msgbuf *) &msgbuf1, size, 1248, 0);
         
         cout << "Got message # " << ++times << endl;
+        
         // Sender 251
-        if(!msgbuf1.is997 || msgbuf1.msg == 1000) {
+        if((!msgbuf1.is997 || msgbuf1.msg == 1000) && sender251) {
             sender251 = handleSender251(msgbuf1);
-           
         } else if (msgbuf1.is997){ // Sender 997
             sender997 = handleSender997(qid, size, msgbuf1);
         }
