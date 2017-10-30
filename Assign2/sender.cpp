@@ -48,7 +48,7 @@ int main(int argc, const char * argv[]) {
         
         if(num % 251 == 0) {
             times ++;
-            setupStructAndSend(msgbuf1, 1248, num, false, size, qid);
+            setupStructAndSend(msgbuf1, 1248, num, false, qid, size);
             cout << "251 sender, message #" << times << ", message: " << num << endl;
         }
     }
