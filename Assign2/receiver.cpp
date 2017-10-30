@@ -52,7 +52,7 @@ int main(int argc, const char * argv[]) {
     }
     
     // Tell receiver 2 to deallocate message queue
-    void setupStructAndSend(msgbuf1, 111, 0, false, qid, size);
+    setupStructAndSend(msgbuf1, 111, 0, false, qid, size);
     
     cout << "Receiver 1, received " << times << " messages and now terminated." << endl;
     return 0;
