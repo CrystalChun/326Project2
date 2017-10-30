@@ -1,27 +1,28 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <iostream>
+
 using namespace std;
 
+// The msgbuf structure for sending messages between processes
 struct buf {
-	long mtype; // M-type for message queue
-	int msg;    // The message
+    long mtype; // M-type for message queue
+    int msg;    // The message
     bool is997; // Tells whether or not this message is sender 997
 };
 
 // Sender 997
 int main(int argc, const char * argv[]) {
     // Initialize this sender
-	buf msgbuf1;
-
+    buf msgbuf1;
+    
     int size = sizeof(msgbuf1) - sizeof(msgbuf1.mtype);
     int times = 0; // The number of times 997 sent a message
     bool term = false; // Whether or not receiver 2 terminated
     srand((unsigned)time(0));
-    int lastSent = 0;
     
     // Get qid
-	int qid = msgget(ftok(".",'u'),0);
+    int qid = msgget(ftok(".",'u'),0);
     
     // Generate and send random number
     while(true) {
@@ -47,8 +48,8 @@ int main(int argc, const char * argv[]) {
             break;
         } else if(num % 997 == 0) {
             int send = rand() % 2;
-
-            // Set mtype to either receiver 2 or receiver 1
+            
+            // Set mtype for either receiver 2 or receiver 1
             if(send == 1 && !term) {
                 msgbuf1.mtype = 1254;
                 cout << "Sending to receiver 2..." << endl;
@@ -73,12 +74,10 @@ int main(int argc, const char * argv[]) {
             // Checks if receiver 2 has terminated
             if(msgbuf1.msg == 1000) {
                 term = true;
-                lastSent = num;
-           }
-       }
+            }
+        }
     }
     
-    cout << "Sender 997 terminating . . . Messages sent: " << times << endl;
-    cout << "Last sent to receiver 2: " << lastSent << endl;
+    cout << "Sender 997 terminating . . . Number of messages sent: " << times << endl;
     return 0;
 }
