@@ -12,6 +12,7 @@
 #include <iostream>
 using namespace std;
 
+// Function declarations
 void setupStructAndSend(struct buf &, long, int, bool, int, int);
 bool handleSender251(struct buf &);
 bool handleSender997(int, int, struct buf &);
@@ -92,6 +93,15 @@ bool handleSender997(int qid, int size, buf &msgbuf1) {
         return true;
     }
 }
+
+// Sets up the message buf structure by assigning them to the specified values
+// and then sending the message buf to the message queue
+// @param msgbuf1: The message buf structure
+// @param mtype: The mtype for this message buf
+// @param msg: The message to be sent
+// @param is997: Whether or not this is sender 997
+// @param qid: The message queue ID
+// @param size: The size of the message buf
 void setupStructAndSend(buf & msgbuf1, long mtype, int msg, bool is997, int qid, int size) {
     msgbuf1.msg = msg;
     msgbuf1.mtype = mtype;

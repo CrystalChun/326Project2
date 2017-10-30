@@ -14,6 +14,10 @@
 
 using namespace std;
 
+// Function declarations
+void setupStructAndSend(struct buf &, long, int, bool, int, int);
+void send(int, int, struct buf &);
+
 // The msgbuf structure for sending messages between processes
 struct buf {
     long mtype; // M-type for message queue
@@ -39,12 +43,8 @@ int main(int argc, const char * argv[]) {
         
         if(num % 257 == 0) {
             times ++;
-            msgbuf1.msg = num;
-            msgbuf1.mtype = 1254;
-            msgbuf1.is997 = false;
-            
-            msgsnd(qid,(struct msgbuf*) &msgbuf1, size, 0);
-            
+            setupStructAndSend(msgbuf1, 1254, num, false, qid, size);
+
             cout << "Sender 257, message #" << times << ", message: " << num << endl;
             
             // Gets flag from receiver to see if it's terminating
@@ -59,4 +59,28 @@ int main(int argc, const char * argv[]) {
     
     cout << "257 terminating ... Sent " << times << " messages.";
     return 0;
+}
+
+// Sets up the message buf structure by assigning them to the specified values
+// and then sending the message buf to the message queue
+// @param msgbuf1: The message buf structure
+// @param mtype: The mtype for this message buf
+// @param msg: The message to be sent
+// @param is997: Whether or not this is sender 997
+// @param qid: The message queue ID
+// @param size: The size of the message buf
+void setupStructAndSend(buf & msgbuf1, long mtype, int msg, bool is997, int qid, int size) {
+    msgbuf1.msg = msg;
+    msgbuf1.mtype = mtype;
+    msgbuf1.is997 = is997;
+    
+    send(qid, size, msgbuf1);
+}
+
+// Sends the message in the msgbuf structure
+// @param qid: The message queue id
+// @param size: The size of the message buf
+// @param msgbuf1: The message buf structure
+void send(int qid, int size, buf & msgbuf1) {
+    msgsnd(qid, (struct msgbuf *) &msgbuf1, size, 0);
 }
